@@ -13,5 +13,10 @@
   "bugs": {
     "url": "https://github.com/liquid-labs/liq-integrations/issues"
   },
-  "homepage": "https://github.com/liquid-labs/liq-integrations#readme"
+  "homepage": "https://github.com/liquid-labs/liq-integrations#readme",
+  "dependencies": {
+    "@liquid-labs/catalyst-scripts-node-project": "^1.0.0-alpha.21",
+    "@liquid-labs/liq-defaults": "^1.0.0-alpha.2",
+    "@liquid-labs/liq-plugins-lib": "^1.0.0-alpha.3"
+  }
 }
