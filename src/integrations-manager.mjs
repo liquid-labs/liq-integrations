@@ -1,7 +1,7 @@
 const IntegrationsManager = class {
   #providers = {}
 
-  callPlugin({ providerFor, providerArgs, hook, hookArgs }) {
+  callHook({ providerFor, providerArgs, hook, hookArgs }) {
     const providerOptions = this.#providers[providerFor]
     if (providerOptions === undefined) {
       throw new Error(`No such provider class '${providerFor}'.`)
