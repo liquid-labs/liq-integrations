@@ -4,7 +4,13 @@
   "description": "",
   "main": "dist/liq-integrations.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "make",
+    "lint": "make lint",
+    "lint:fix": "make lint-fix",
+    "test": "make test",
+    "prepack": "make build",
+    "preversion": "make test && make lint",
+    "qa": "make qa"
   },
   "keywords": [],
   "author": "Zane Rockenbaugh <zane@liquid-labs.com>",
@@ -13,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/liquid-labs/liq-integrations/issues"
   },
-  "homepage": "https://github.com/liquid-labs/liq-integrations#readme"
+  "homepage": "https://github.com/liquid-labs/liq-integrations#readme",
+  "dependencies": {
+    "@liquid-labs/catalyst-scripts-node-project": "^1.0.0-alpha.21",
+    "@liquid-labs/liq-defaults": "^1.0.0-alpha.2",
+    "@liquid-labs/liq-plugins-lib": "^1.0.0-alpha.3",
+    "find-plugins": "^1.1.7"
+  }
 }
