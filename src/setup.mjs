@@ -6,10 +6,7 @@ import { LIQ_HOME } from '@liquid-labs/liq-defaults'
 
 import { IntegrationsManager } from './integrations-manager'
 
-const setup = async({ app, model, reporter }) => {
-  app.ext.integrations = new IntegrationsManager()
-  app.ext.integrationsLoaded = []
-
+const loadPlugins = async ({ app, model, reporter }) => {
   const pluginPath = process.env.LIQ_INTEGRATION_PLUGINS_PATH || fsPath.join(LIQ_HOME, 'plugins', 'integrations')
   const pluginPkg = fsPath.join(pluginPath, 'package.json')
   const pluginDir = fsPath.join(pluginPath, 'node_modules')
@@ -40,6 +37,23 @@ const setup = async({ app, model, reporter }) => {
     }
 
     app.ext.integrationsLoaded.push({ name, summary })
+  }
+}
+
+const setup = async({ app, model, reporter }) => {
+  app.ext.integrations = new IntegrationsManager()
+  app.ext.integrationsLoaded = []
+
+  setupPathResolvers({ app })
+  await loadPlugins({ app, model, reporter })
+}
+
+const setupPathResolvers = ({ app }) => {
+  app.ext.pathResolvers.integrationPluginName = {
+    optionsFetcher : () => {
+      app.ext.integrationsLoaded.map(({ name }) => name)
+    },
+    bitReString : '[a-zA-Z0-9 _-]+'
   }
 }
 
