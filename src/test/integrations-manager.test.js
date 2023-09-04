@@ -1,8 +1,8 @@
-/* global describe expect test */
+/* global describe expect fail test */
 import { IntegrationsManager } from '../integrations-manager'
 
 describe('IntegrationsManager', () => {
-  test('can register plugin and invoke hook', () => {
+  test('can register plugin and invoke hook', async() => {
     const im = new IntegrationsManager()
 
     im.register({
@@ -12,10 +12,10 @@ describe('IntegrationsManager', () => {
       providerTest : () => true
     })
 
-    expect(im.callHook({ providerFor : 'test stuff', hook : 'test hook' })).toBe('hi!')
+    expect(await im.callHook({ providerFor : 'test stuff', hook : 'test hook' })).toBe('hi!')
   })
 
-  test('passes provider test args', () => {
+  test('passes provider test args', async() => {
     const im = new IntegrationsManager()
 
     im.register({
@@ -25,10 +25,10 @@ describe('IntegrationsManager', () => {
       providerTest : ({ val }) => val === 'foo'
     })
 
-    expect(im.callHook({ providerFor : 'test stuff', providerArgs : { val : 'foo' }, hook : 'test hook' })).toBe('hi!')
+    expect(await im.callHook({ providerFor : 'test stuff', providerArgs : { val : 'foo' }, hook : 'test hook' })).toBe('hi!')
   })
 
-  test('passes hook args', () => {
+  test('passes hook args', async() => {
     const im = new IntegrationsManager()
 
     im.register({
@@ -38,10 +38,10 @@ describe('IntegrationsManager', () => {
       providerTest : () => true
     })
 
-    expect(im.callHook({ providerFor : 'test stuff', hook : 'test hook', hookArgs : { name : 'foo' } })).toBe('hi foo!')
+    expect(await im.callHook({ providerFor : 'test stuff', hook : 'test hook', hookArgs : { name : 'foo' } })).toBe('hi foo!')
   })
 
-  test('selects matching provider from multiple options', () => {
+  test('selects matching provider from multiple options', async() => {
     const im = new IntegrationsManager()
 
     im.register({
@@ -58,18 +58,24 @@ describe('IntegrationsManager', () => {
       providerTest : ({ v }) => v === 'bar'
     })
 
-    expect(im.callHook({ providerFor : 'test stuff', providerArgs : { v : 'foo' }, hook : 'hook' })).toBe(1)
-    expect(im.callHook({ providerFor : 'test stuff', providerArgs : { v : 'bar' }, hook : 'hook' })).toBe(2)
+    expect(await im.callHook({ providerFor : 'test stuff', providerArgs : { v : 'foo' }, hook : 'hook' })).toBe(1)
+    expect(await im.callHook({ providerFor : 'test stuff', providerArgs : { v : 'bar' }, hook : 'hook' })).toBe(2)
   })
 
-  test("raises exception when no 'providerFor's found", () => {
+  test("raises exception when no 'providerFor's found", (done) => {
     const im = new IntegrationsManager()
 
-    expect(() => im.callHook({ providerFor : 'test stuff', hook : 'test hook' }))
-      .toThrow(/No such provider class 'test stuff'/)
+    im.callHook({ providerFor : 'test stuff', hook : 'test hook' })
+      .then(() => {
+        fail()
+      })
+      .catch((e) => {
+        expect(e.message).toMatch(/No such provider class 'test stuff'/)
+        done()
+      })
   })
 
-  test('raises error when multiple providers match', () => {
+  test('raises error when multiple providers match', (done) => {
     const im = new IntegrationsManager()
 
     im.register({
@@ -86,10 +92,17 @@ describe('IntegrationsManager', () => {
       providerTest : () => true
     })
 
-    expect(() => im.callHook({ providerFor : 'test stuff', hook : 'test hook' })).toThrow(/Ambiguous multiple/)
+    im.callHook({ providerFor : 'test stuff', hook : 'test hook' })
+      .then(() => {
+        fail()
+      })
+      .catch((e) => {
+        expect(e.message).toMatch(/Ambiguous multiple/)
+        done()
+      })
   })
 
-  test('raises error when no matching hook found in matching provider', () => {
+  test('raises error when no matching hook found in matching provider', (done) => {
     const im = new IntegrationsManager()
 
     im.register({
@@ -99,6 +112,13 @@ describe('IntegrationsManager', () => {
       providerTest : () => true
     })
 
-    expect(() => im.callHook({ providerFor : 'test stuff', hook : 'another hook' })).toThrow(/No such hook/)
+    im.callHook({ providerFor : 'test stuff', hook : 'another hook' })
+      .then(() => {
+        fail()
+      })
+      .catch((e) => {
+        expect(e.message).toMatch(/No such hook/)
+        done()
+      })
   })
 })

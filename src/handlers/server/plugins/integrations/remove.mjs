@@ -8,7 +8,7 @@ const { help, method, parameters } = removePluginsSetup({ pluginsDesc : 'sever e
 const path = ['server', 'plugins', 'integrations', ':integrationPluginName', 'remove']
 
 const installedPluginsRetriever = ({ app }) => app.ext.integrations.listPlugins()
-const pluginPkgDirRetriever = fsPath.join(LIQ_HOME, 'plugins', 'integrations')
+const pluginPkgDirRetriever = () => fsPath.join(LIQ_HOME(), 'plugins', 'integrations')
 
 const func = removePluginsHandler({
   installedPluginsRetriever,
