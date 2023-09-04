@@ -1,7 +1,7 @@
 const IntegrationsManager = class {
   #providers = {}
 
-  callHook({ providerFor, providerArgs, hook, hookArgs }) {
+  async callHook({ providerFor, providerArgs, hook, hookArgs }) {
     const providerOptions = this.#providers[providerFor]
     if (providerOptions === undefined) {
       throw new Error(`No such provider class '${providerFor}'.`)
@@ -21,14 +21,28 @@ const IntegrationsManager = class {
       throw new Error(`No such hook '${hook}' found for provider '${name}' (of class '${providerFor}'.`)
     }
 
-    return hookFunc(hookArgs)
+    const hookResult = hookFunc(hookArgs)
+    return hookResult.then === undefined ? hookResult : await hookResult
   }
 
-  register({ hooks, name, providerFor, providerTest }) {
+  listInstalledPlugins() {
+    // return Object.values(this.#providers).reduce((acc, { name, npmName }) => {
+    console.log('Object.values:', Object.values(this.#providers))
+    const list = Object.values(this.#providers).reduce((acc, entries) => {
+      acc.push(...entries.map(({ name, npmName }) => ({ name, npmName })))
+      return acc
+    }, [])
+      .filter((v, i, a) => i === a.findIndex(({ name }) => name === v.name))
+
+    console.log('list:', list)
+    return list
+  }
+
+  register({ hooks, name, npmName, providerFor, providerTest }) {
     if (!(providerFor in this.#providers)) {
       this.#providers[providerFor] = []
     }
-    this.#providers[providerFor].push({ hooks, name, providerTest })
+    this.#providers[providerFor].push({ hooks, name, npmName, providerTest })
   }
 }
 

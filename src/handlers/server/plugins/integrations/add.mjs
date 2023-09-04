@@ -13,8 +13,8 @@ const { help, method, parameters } =
 
 const path = ['server', 'plugins', 'integrations', 'add']
 
-const installedPluginsRetriever = ({ app }) => app.ext.integrations.listPlugins()
-const pluginPkgDirRetriever = fsPath.join(LIQ_HOME, 'plugins', 'integrations')
+const installedPluginsRetriever = ({ app }) => app.ext.integrations.listInstalledPlugins()
+const pluginPkgDirRetriever = () => fsPath.join(LIQ_HOME(), 'plugins', 'integrations')
 
 const func = addPluginsHandler({
   hostVersionRetriever,
