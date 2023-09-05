@@ -18,7 +18,7 @@ const IntegrationsManager = class {
     const { name, hooks } = filteredOptions[0]
     const hookFunc = hooks[hook]
     if (hookFunc === undefined) {
-      throw new Error(`No such hook '${hook}' found for provider '${name}' (of class '${providerFor}'.`)
+      throw new Error(`No such hook '${hook}' found in provider '${name}' (of class '${providerFor}').`)
     }
 
     const hookResult = hookFunc(hookArgs)
