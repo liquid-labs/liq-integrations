@@ -1,0 +1,22 @@
+Test git rev: 86f6c45b6c0434329bf29c3fbd3c80f9a985178f
+PASS test/integrations-manager.test.js
+  IntegrationsManager
+    ✓ can register plugin and invoke hook (2 ms)
+    ✓ passes provider test args
+    ✓ passes hook args
+    ✓ selects matching provider from multiple options
+    ✓ raises exception when no 'providerFor's found (1 ms)
+    ✓ raises error when multiple providers match
+    ✓ raises error when no matching hook found in matching provider
+
+--------------------------|---------|----------|---------|---------|-------------------
+File                      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+--------------------------|---------|----------|---------|---------|-------------------
+All files                 |   72.22 |       75 |   54.54 |      75 |                   
+ integrations-manager.mjs |   72.22 |       75 |   54.54 |      75 | 30-38             
+--------------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        0.281 s
+Ran all test suites.
