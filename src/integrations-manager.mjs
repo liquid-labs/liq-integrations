@@ -2,10 +2,7 @@ const IntegrationsManager = class {
   #providers = {}
 
   async callHook({ providerFor, providerArgs, hook, hookArgs }) {
-    const providerOptions = this.#providers[providerFor]
-    if (providerOptions === undefined) {
-      throw new Error(`No such provider class '${providerFor}'.`)
-    }
+    const providerOptions = this.#providers[providerFor] || []
 
     const filteredOptions = providerOptions.filter((po) => po.providerTest(providerArgs))
     if (filteredOptions.length === 0) {
@@ -27,7 +24,7 @@ const IntegrationsManager = class {
 
   listInstalledPlugins() {
     // return Object.values(this.#providers).reduce((acc, { name, npmName }) => {
-    console.log('Object.values:', Object.values(this.#providers))
+    console.log('Object.values:', Object.values(this.#providers)) // DEBUG
     const list = Object.values(this.#providers).reduce((acc, entries) => {
       acc.push(...entries.map(({ name, npmName }) => ({ name, npmName })))
       return acc
