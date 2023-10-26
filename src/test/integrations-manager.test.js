@@ -70,7 +70,7 @@ describe('IntegrationsManager', () => {
         fail()
       })
       .catch((e) => {
-        expect(e.message).toMatch(/No such provider class 'test stuff'/)
+        expect(e.message).toMatch(/No provider found for 'test stuff'/)
         done()
       })
   })

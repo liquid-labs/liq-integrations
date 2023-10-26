@@ -7,7 +7,7 @@ import { LIQ_HOME } from '@liquid-labs/liq-defaults'
 
 import { IntegrationsManager } from './integrations-manager'
 
-const loadPlugins = async({ app, model, reporter }) => {
+const loadPlugins = async({ app, reporter }) => {
   const pluginPath = process.env.LIQ_INTEGRATION_PLUGINS_PATH || fsPath.join(LIQ_HOME(), 'plugins', 'integrations')
   const pluginPkg = fsPath.join(pluginPath, 'package.json')
   const pluginDir = fsPath.join(pluginPath, 'node_modules')
@@ -32,18 +32,18 @@ const loadPlugins = async({ app, model, reporter }) => {
     }
     reporter.log(`Registering '${npmName}' (${name})...`)
 
-    const registration = registerIntegrationPlugins({ app, model, reporter })
+    const registration = registerIntegrationPlugins({ app, reporter })
     if (registration?.then !== undefined) {
       await registration
     }
   }
 }
 
-const setup = async({ app, model, reporter }) => {
+const setup = async({ app, reporter }) => {
   app.ext.integrations = new IntegrationsManager()
 
   setupPathResolvers({ app })
-  await loadPlugins({ app, model, reporter })
+  await loadPlugins({ app, reporter })
 }
 
 const setupPathResolvers = ({ app }) => {
