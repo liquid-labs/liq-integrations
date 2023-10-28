@@ -6,7 +6,8 @@ import findPlugins from 'find-plugins'
 import { IntegrationsManager } from './integrations-manager'
 
 const loadPlugins = async({ app, reporter }) => {
-  const pluginPath = process.env.LIQ_INTEGRATION_PLUGINS_PATH || fsPath.join(app.serverHome, 'plugins', 'integrations')
+  const pluginPath = process.env.LIQ_INTEGRATION_PLUGINS_PATH 
+    || fsPath.join(app.ext.serverHome, 'plugins', 'integrations')
   const pluginPkg = fsPath.join(pluginPath, 'package.json')
   const pluginDir = fsPath.join(pluginPath, 'node_modules')
 
