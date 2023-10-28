@@ -1,6 +1,5 @@
 import * as fsPath from 'path'
 
-import { LIQ_HOME } from '@liquid-labs/liq-defaults'
 import { removePluginsHandler, removePluginsSetup } from '@liquid-labs/liq-plugins-lib'
 
 const { help, method, parameters } = removePluginsSetup({ pluginsDesc : 'sever endpoint' })
@@ -8,7 +7,7 @@ const { help, method, parameters } = removePluginsSetup({ pluginsDesc : 'sever e
 const path = ['server', 'plugins', 'integrations', ':integrationPluginName', 'remove']
 
 const installedPluginsRetriever = ({ app }) => app.ext.integrations.listPlugins()
-const pluginPkgDirRetriever = () => fsPath.join(LIQ_HOME(), 'plugins', 'integrations')
+const pluginPkgDirRetriever = ({ app }) => fsPath.join(app.ext.serverHome, 'plugins', 'integrations')
 
 const func = removePluginsHandler({
   installedPluginsRetriever,
