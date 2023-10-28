@@ -1,0 +1,38 @@
+Test git rev: 05e95e9150dd5b106b929542df79f7185cc8beef
+PASS test/integrations-manager.test.js
+  IntegrationsManager
+    callHook
+      ✓ can register plugin and invoke synchronous hook (1 ms)
+      ✓ can register plugin and invoke asynchronous hook
+      ✓ passes provider test args
+      ✓ passes hook args
+      ✓ selects matching provider from multiple options (1 ms)
+      ✓ raises exception when no 'providerFor's found
+      ✓ raises error when multiple providers match
+      ✓ raises error when no matching hook found in matching provider
+    listInstalledPlugins
+      ✓ returns empty array for trivially empty IM
+      ✓ lists installed hooks
+    hasHook
+      ✓ returns false on trivially empty IM
+      ✓ returns false when there is a provider but no hook
+      ✓ returns true when there is a provider and hook
+
+------------------------------------------|---------|----------|---------|---------|-------------------
+File                                      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+------------------------------------------|---------|----------|---------|---------|-------------------
+All files                                 |   30.18 |    26.66 |   39.28 |   31.76 |                   
+ src                                      |      50 |    36.36 |   61.11 |   47.36 |                   
+  integrations-manager.mjs                |     100 |      100 |     100 |     100 |                   
+  setup.mjs                               |       0 |        0 |       0 |       0 | 1-50              
+ src/handlers/server/plugins/integrations |       0 |        0 |       0 |       0 |                   
+  add.mjs                                 |       0 |        0 |       0 |       0 | 1-18              
+  details.mjs                             |       0 |      100 |       0 |       0 | 1-9               
+  list.mjs                                |       0 |      100 |       0 |       0 | 1-10              
+  remove.mjs                              |       0 |        0 |       0 |       0 | 1-12              
+------------------------------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        0.319 s, estimated 1 s
+Ran all test suites.
