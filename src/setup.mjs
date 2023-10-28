@@ -47,10 +47,8 @@ const setup = async({ app, reporter }) => {
 
 const setupPathResolvers = ({ app }) => {
   app.ext.pathResolvers.integrationPluginName = {
-    optionsFetcher : () => {
-      app.ext.integrations.listInstalledPlugins()
-    },
-    bitReString : '[a-zA-Z0-9 _-]+'
+    optionsFetcher : () => app.ext.integrations.listInstalledPlugins(),
+    bitReString    : '[a-zA-Z0-9 _-]+'
   }
 }
 
