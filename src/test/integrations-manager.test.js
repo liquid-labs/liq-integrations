@@ -147,7 +147,7 @@ describe('IntegrationsManager', () => {
 
     test('lists installed hooks', () => {
       expect(simpleIM.listInstalledPlugins()).toEqual([
-        { name: 'test plugin', npmName: '@acme/foo', hooks: [ 'test hook' ] }
+        { name : 'test plugin', npmName : '@acme/foo', hooks : ['test hook'] }
       ])
     })
   })
@@ -155,15 +155,15 @@ describe('IntegrationsManager', () => {
   describe('hasHook', () => {
     test('returns false on trivially empty IM', () => {
       const im = new IntegrationsManager()
-      expect(im.hasHook({ providerFor: 'foo', hook: 'noHook' })).toBe(false)
+      expect(im.hasHook({ providerFor : 'foo', hook : 'noHook' })).toBe(false)
     })
 
     test('returns false when there is a provider but no hook', () => {
-      expect(simpleIM.hasHook({ providerFor: 'test stuff', hook: 'noHook' })).toBe(false)
+      expect(simpleIM.hasHook({ providerFor : 'test stuff', hook : 'noHook' })).toBe(false)
     })
 
     test('returns true when there is a provider and hook', () => {
-      expect(simpleIM.hasHook({ providerFor: 'test stuff', hook: 'test hook' })).toBe(true)
+      expect(simpleIM.hasHook({ providerFor : 'test stuff', hook : 'test hook' })).toBe(true)
     })
   })
 })

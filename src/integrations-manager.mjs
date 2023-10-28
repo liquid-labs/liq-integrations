@@ -3,7 +3,7 @@ const IntegrationsManager = class {
 
   async callHook({ providerFor, providerArgs, hook, hookArgs }) {
     const hookFunc = this.#getHook({ providerFor, providerArgs, hook })
-    
+
     const hookResult = hookFunc(hookArgs)
     return hookResult.then === undefined ? hookResult : await hookResult
   }
@@ -33,7 +33,7 @@ const IntegrationsManager = class {
   }
 
   hasHook({ providerFor, providerArgs, hook }) {
-    const hookFunc = this.#getHook({ providerFor, providerArgs, hook, noThrow: true })
+    const hookFunc = this.#getHook({ providerFor, providerArgs, hook, noThrow : true })
 
     return !!hookFunc
   }
@@ -41,7 +41,7 @@ const IntegrationsManager = class {
   listInstalledPlugins() {
     // return Object.values(this.#providers).reduce((acc, { name, npmName }) => {
     const list = Object.values(this.#providers).reduce((acc, entries) => {
-      acc.push(...entries.map(({ name, npmName, hooks }) => ({ name, npmName, hooks: Object.keys(hooks) })))
+      acc.push(...entries.map(({ name, npmName, hooks }) => ({ name, npmName, hooks : Object.keys(hooks) })))
       return acc
     }, [])
       .filter((v, i, a) => i === a.findIndex(({ name }) => name === v.name))
