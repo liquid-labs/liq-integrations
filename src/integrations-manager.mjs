@@ -2,10 +2,20 @@ const IntegrationsManager = class {
   #providers = {}
 
   async callHook({ providerFor, providerArgs, hook, hookArgs }) {
+    const hookFunc = this.#getHook({ providerFor, providerArgs, hook })
+
+    const hookResult = hookFunc(hookArgs)
+    return hookResult.then === undefined ? hookResult : await hookResult
+  }
+
+  #getHook({ providerFor, providerArgs, hook, noThrow }) {
     const providerOptions = this.#providers[providerFor] || []
 
     const filteredOptions = providerOptions.filter((po) => po.providerTest(providerArgs))
     if (filteredOptions.length === 0) {
+      if (noThrow === true) {
+        return undefined
+      }
       throw new Error(`No provider found for '${providerFor}'.`)
     }
     else if (filteredOptions.length > 1) {
@@ -14,24 +24,28 @@ const IntegrationsManager = class {
 
     const { name, hooks } = filteredOptions[0]
     const hookFunc = hooks[hook]
-    if (hookFunc === undefined) {
+
+    if (hookFunc === undefined && noThrow !== true) {
       throw new Error(`No such hook '${hook}' found in provider '${name}' (of class '${providerFor}').`)
     }
 
-    const hookResult = hookFunc(hookArgs)
-    return hookResult.then === undefined ? hookResult : await hookResult
+    return hookFunc
+  }
+
+  hasHook({ providerFor, providerArgs, hook }) {
+    const hookFunc = this.#getHook({ providerFor, providerArgs, hook, noThrow : true })
+
+    return !!hookFunc
   }
 
   listInstalledPlugins() {
     // return Object.values(this.#providers).reduce((acc, { name, npmName }) => {
-    console.log('Object.values:', Object.values(this.#providers)) // DEBUG
     const list = Object.values(this.#providers).reduce((acc, entries) => {
-      acc.push(...entries.map(({ name, npmName }) => ({ name, npmName })))
+      acc.push(...entries.map(({ name, npmName, hooks }) => ({ name, npmName, hooks : Object.keys(hooks) })))
       return acc
     }, [])
       .filter((v, i, a) => i === a.findIndex(({ name }) => name === v.name))
 
-    console.log('list:', list)
     return list
   }
 
