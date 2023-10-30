@@ -41,7 +41,7 @@ const loadPlugins = async({ app, reporter }) => {
 const setup = async({ app, reporter }) => {
   app.ext.setupMethods.push({
     name : 'setup and load integration plugins',
-    func : async ({ app, reporter }) => { 
+    func : async({ app, reporter }) => {
       app.ext.integrations = new IntegrationsManager()
       await loadPlugins({ app, reporter })
     }
