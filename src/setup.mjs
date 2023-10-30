@@ -39,10 +39,15 @@ const loadPlugins = async({ app, reporter }) => {
 }
 
 const setup = async({ app, reporter }) => {
-  app.ext.integrations = new IntegrationsManager()
+  app.ext.setupMethods.push({
+    name : 'setup and load integration plugins',
+    func : async({ app, reporter }) => {
+      app.ext.integrations = new IntegrationsManager()
+      await loadPlugins({ app, reporter })
+    }
+  })
 
   setupPathResolvers({ app })
-  await loadPlugins({ app, reporter })
 }
 
 const setupPathResolvers = ({ app }) => {
