@@ -1,0 +1,41 @@
+Test git rev: e6447996806c949be005519227558ad04a31b243
+PASS test/integrations-manager.test.js
+  IntegrationsManager
+    callHook
+      ✓ can register plugin and invoke synchronous hook (1 ms)
+      ✓ can register plugin and invoke asynchronous hook
+      ✓ passes provider test args (1 ms)
+      ✓ passes hook args
+      ✓ selects matching provider from multiple options
+      ✓ raises exception when no 'providerFor's found (1 ms)
+      ✓ raises error when multiple providers match
+      ✓ raises error when no matching hook found in matching provider
+    listInstalledPlugins
+      ✓ returns empty array for trivially empty IM (1 ms)
+      ✓ lists installed hooks
+    hasHook
+      ✓ returns false on trivially empty IM
+      ✓ returns false when there is a provider but no hook (1 ms)
+      ✓ returns true when there is a provider and hook
+
+------------------------------------------|---------|----------|---------|---------|-------------------
+File                                      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+------------------------------------------|---------|----------|---------|---------|-------------------
+All files                                 |    25.6 |    23.52 |   32.35 |      27 |                   
+ src                                      |   46.37 |     38.7 |   57.89 |   43.54 |                   
+  integrations-manager.mjs                |     100 |      100 |     100 |     100 |                   
+  setup.mjs                               |       0 |        0 |       0 |       0 | 1-66              
+ src/handlers/server/plugins/integrations |       0 |        0 |       0 |       0 |                   
+  add.mjs                                 |       0 |        0 |       0 |       0 | 1-18              
+  details.mjs                             |       0 |      100 |       0 |       0 | 1-9               
+  list.mjs                                |       0 |      100 |       0 |       0 | 1-10              
+  remove.mjs                              |       0 |        0 |       0 |       0 | 1-12              
+ src/integrations                         |       0 |        0 |       0 |       0 |                   
+  integration-controls.mjs                |       0 |        0 |       0 |       0 | 1-6               
+  register-integrations.mjs               |       0 |      100 |       0 |       0 | 1-11              
+------------------------------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       13 passed, 13 total
+Snapshots:   0 total
+Time:        0.376 s, estimated 1 s
+Ran all test suites.
