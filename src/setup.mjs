@@ -4,10 +4,11 @@ import * as fsPath from 'node:path'
 import findPlugins from 'find-plugins'
 
 import { IntegrationsManager } from './integrations-manager'
+import { pluginPackageDir } from './integrations/integration-controls'
+import { registerIntegrations } from './integrations/register-integrations'
 
 const loadPlugins = async({ app, reporter }) => {
-  const pluginPath = process.env.LIQ_INTEGRATION_PLUGINS_PATH
-    || fsPath.join(app.ext.serverHome, 'plugins', 'integrations')
+  const pluginPath = pluginPackageDir({ app })
   const pluginPkg = fsPath.join(pluginPath, 'package.json')
   const pluginDir = fsPath.join(pluginPath, 'node_modules')
 
@@ -35,16 +36,26 @@ const loadPlugins = async({ app, reporter }) => {
     if (registration?.then !== undefined) {
       await registration
     }
+
+    app.ext._liqIntegrations.plugins.push({ npmName })
   }
 }
 
 const setup = async({ app, reporter }) => {
+  app.ext._liqIntegrations = {
+    plugins : []
+  }
   app.ext.setupMethods.push({
     name : 'setup and load integration plugins',
     func : async({ app, reporter }) => {
       app.ext.integrations = new IntegrationsManager()
       await loadPlugins({ app, reporter })
-    }
+    },
+  },
+  {
+    name: 'register integration plugin integrations',
+    deps: ['setup and load integration plugins'],
+    func: registerIntegrations
   })
 
   setupPathResolvers({ app })
