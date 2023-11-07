@@ -3,6 +3,8 @@ import * as fsPath from 'node:path'
 
 import findPlugins from 'find-plugins'
 
+import { npmPackageNameRE } from '@liquid-labs/regex-repo'
+
 import { IntegrationsManager } from './integrations-manager'
 import { pluginPackageDir } from './integrations/integration-controls'
 import { registerIntegrations } from './integrations/register-integrations'
@@ -64,7 +66,7 @@ const setup = async({ app, reporter }) => {
 const setupPathResolvers = ({ app }) => {
   app.ext.pathResolvers.integrationPluginName = {
     optionsFetcher : () => app.ext.integrations.listInstalledPlugins(),
-    bitReString    : '[a-zA-Z0-9 _-]+'
+    bitReString    : npmPackageNameRE.toString().slice(1, -1)
   }
 }
 
