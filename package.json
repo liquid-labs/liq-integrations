@@ -1,7 +1,7 @@
 {
   "name": "@liquid-labs/liq-integrations",
   "version": "1.0.0-alpha.0",
-  "description": "Enables integrations plugins for plugable-express based servers.",
+  "description": "Enables integrations plugins for a @liquid-labs/plugable-express server.",
   "main": "dist/liq-integrations.js",
   "scripts": {
     "build": "make",
@@ -25,6 +25,7 @@
   "homepage": "https://github.com/liquid-labs/liq-integrations#readme",
   "dependencies": {
     "@liquid-labs/liq-plugins-lib": "^1.0.0-alpha.11",
+    "@liquid-labs/regex-repo": "^1.1.2",
     "find-plugins": "^1.1.7"
   },
   "devDependencies": {
